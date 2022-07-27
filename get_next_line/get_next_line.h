@@ -7,11 +7,11 @@
 # include <sys/stat.h>
 # include <fcntl.h> 
 # include <stdlib.h>
-#define BUFFER_SIZE 1
 
-char *get_next_line(int fd);
+char    *get_next_line(int fd);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *str);
 char	*ft_substr(const char *s, unsigned int start, size_t len);
+int     findliner(char *text);
 
 #endif

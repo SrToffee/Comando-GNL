@@ -10,7 +10,6 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*result;
@@ -35,6 +34,20 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	result[i] = '\0';
 	return ((char *)result);
+}
+
+int findliner(char *text)
+{
+    int i;
+
+    i = 0;
+    while(i <= BUFFER_SIZE)
+    {
+        if(text[i] == '\0' || text[i] == '\n')
+            break;
+        i++;
+    }
+    return(i);
 }
 
 char	*ft_substr(const char *s, unsigned int start, size_t len)

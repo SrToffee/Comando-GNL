@@ -1,40 +1,42 @@
 #include "get_next_line.h"
 
-
 char *get_next_line(int fd)
 {
-    char            *object;
-    static  char    *rest;
-    static  int     i;
+    char        *value;
+    char        *line;
+    static char *remain;
+    int         i;
 
-    i = 0;
-    if(i <= BUFFER_SIZE)
+    if(fd < 0 || BUFFER_SIZE < 1)
+        return(NULL);
+    value = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+    if(!value)
+        return (NULL);
+    i = read(fd, value, BUFFER_SIZE); 
+    if(value[0] == '\0')
+        return(0);
+    if(remain != NULL)      
     {
-        i++;
-        object = malloc(sizeof(char) * 2);
-        read(fd, object, 1);
-        if(!rest)
-        {
-            rest = malloc(sizeof(char) * 2);
-            rest = '\0';
-        }
-        rest = ft_strjoin(rest, object);
-        if(object[0] == '\n' || object[0] == '\0')
-            return(rest);
-        else
-            return(get_next_line(fd));
-    }else
-        return(rest);    
+        value = ft_strjoin(remain, value);
+        free(remain);
+    }
+    i = findliner(value) + 1;
+    line = ft_substr(value, 0, i);
+    if(i < BUFFER_SIZE)
+        remain = ft_substr(value, i, ft_strlen(value));
+    free(value);
+    return(line);
 }
 
-int main (){
+/*int main()
+{
     int fd;
     char *path = "liroliro.txt";
-
+    int i = 0;
     fd = open(path, O_RDONLY);
 
-    printf("fd = %d \n", fd); 
+    printf("fd = %d \n", fd);
 
-    printf("%s", get_next_line(fd));
-    printf("%s", get_next_line(fd));
-}
+    while(++i < 4)
+        printf("|%s|\n", get_next_line(fd));
+}*/
